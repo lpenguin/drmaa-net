@@ -80,13 +80,5 @@ namespace DrmaaNet {
         public JobTemplate(){
             this.instance = DrmaaWrapper.AllocateJobTemplate();
         }
-
-        public string GetAttribute(string name){
-            return DrmaaWrapper.GetAttribute(this.instance, name);
-        }
-
-        public void SetAttribute(string name, string value){
-            DrmaaWrapper.SetAttribute(this.instance, name, value);
-        }
     }
 }

@@ -2,7 +2,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System;
 
-namespace DrmaaNet {
+namespace Drmaa {
     public class JobTemplate{
         internal DrmaaJobTemplate instance;
         private class Attributes {

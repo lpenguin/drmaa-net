@@ -1,4 +1,4 @@
-namespace DrmaaNet{
+namespace Drmaa{
     // TODO: to static class
     public class Session{
         public Session(string contact){

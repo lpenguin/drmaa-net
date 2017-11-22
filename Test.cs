@@ -3,7 +3,7 @@ using System.Threading;
 using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using DrmaaNet;
+using Drmaa;
 
 namespace myApp
 {

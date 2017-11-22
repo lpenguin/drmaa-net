@@ -4,7 +4,7 @@ using System;
 
 namespace Drmaa {
     public class JobTemplate{
-        private DrmaaJobTemplate instance;
+        private readonly DrmaaJobTemplate instance;
 
         public string JobEnvironment {
             get { 

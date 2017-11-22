@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -97,6 +98,19 @@ namespace Drmaa
             IntPtr jt,
             string name, string[] values,
             StringBuilder error_diagnosis, int error_diag_len
+        );
+
+        [DllImport("libdrmaa")]
+        public static extern int drmaa_get_vector_attribute(
+            IntPtr jt,
+            string name, out IntPtr values,
+            StringBuilder error_diagnosis, int error_diag_len
+        );
+
+        [DllImport("libdrmaa")]
+        public static extern int drmaa_get_next_attr_value( 
+            IntPtr values,
+            StringBuilder value, int value_len 
         );
     }
 
@@ -240,6 +254,34 @@ namespace Drmaa
                 throw new DrmaaException(res, error.ToString());
             }
             return (Status)status;
+        }
+
+        public static string[] GetAttributes(DrmaaJobTemplate jobTemplate, string name){
+            IntPtr valuesIter;
+            StringBuilder error = new StringBuilder(1024);
+            int res = DrmaaWrapperIntenal.drmaa_get_vector_attribute(
+                jobTemplate.instance,
+                name,
+                out valuesIter,
+                error, error.Capacity
+            );
+
+            if (res != 0)
+            {
+                throw new DrmaaException(res, error.ToString());
+            }
+
+            StringBuilder value = new StringBuilder(1024);
+            var result = new List<string>();
+            while(res == 0){
+                res = DrmaaWrapperIntenal.drmaa_get_next_attr_value(
+                    valuesIter, 
+                    value,
+                    value.Capacity
+                );
+                result.Add(value.ToString());
+            }
+            return result.ToArray();
         }
 
         public static void SetAttributes(DrmaaJobTemplate jobTemplate, string name, string[] values){

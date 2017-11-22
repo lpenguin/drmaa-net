@@ -15,9 +15,9 @@ namespace Drmaa {
         };
 
         public string[] Arguments {
-            // get { 
-            //     return DrmaaWrapper.GetAttribute(instance, Attributes.RemoteCommand); 
-            // }
+            get { 
+                return DrmaaWrapper.GetAttributes(instance, Attributes.Argv); 
+            }
 
             set { 
                 DrmaaWrapper.SetAttributes(instance, Attributes.Argv, value); 

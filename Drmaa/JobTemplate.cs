@@ -4,14 +4,12 @@ using System;
 
 namespace Drmaa {
     public class JobTemplate{
-        internal DrmaaJobTemplate instance;
+        private DrmaaJobTemplate instance;
         private class Attributes {
             internal static readonly string RemoteCommand = "drmaa_remote_command";
             internal static readonly string WorkingDirectory = "drmaa_wd";
             internal static readonly string NativeSpecification = "drmaa_native_specification";
-
             internal static readonly string JobName = "drmaa_job_name";
-
             internal static readonly string JobSubmissionState = "drmaa_js_state";
             internal static readonly string Argv = "drmaa_v_argv";
         };
@@ -76,9 +74,12 @@ namespace Drmaa {
             }
         }
 
-
         public JobTemplate(){
             this.instance = DrmaaWrapper.AllocateJobTemplate();
+        }
+
+        public string Submit(){
+            return DrmaaWrapper.RunJob(instance);
         }
     }
 }

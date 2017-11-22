@@ -12,17 +12,17 @@ namespace myApp
 
         static void Main(string[] args)
         {
-            Session session = new Session(null);
+            Session.Init();
             var jt = new JobTemplate();
             jt.JobName = "awesome_job";
             jt.RemoteCommand = args[0];
             jt.Arguments = args.Skip(1).ToArray();
             Console.WriteLine(args[0]);
             Console.WriteLine(string.Join(", ", args.Skip(1).ToArray()));
-            var jobId = session.RunJobTemplate(jt);
+            var jobId = jt.Submit();
 
             while(true){
-                var status = session.JobStatus(jobId);
+                var status = Session.JobStatus(jobId);
                 Console.WriteLine(status);
                 Thread.Sleep(1000);
             }

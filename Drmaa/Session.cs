@@ -1,19 +1,14 @@
 namespace Drmaa{
-    // TODO: to static class
     public class Session{
-        public Session(string contact){
+        public static void Init(string contact=null){
             DrmaaWrapper.Init(contact);
         }
 
-        public string RunJobTemplate(JobTemplate jobTemplate){
-            return DrmaaWrapper.RunJob(jobTemplate.instance);
-        }
-
-        public Status JobStatus(string jobId){
+        public static Status JobStatus(string jobId){
             return DrmaaWrapper.JobPs(jobId);
         }
 
-        public void JobControl(string jobId, Action action){
+        public static void JobControl(string jobId, Action action){
             DrmaaWrapper.Control(jobId, action);
         }
     }

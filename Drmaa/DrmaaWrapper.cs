@@ -130,8 +130,6 @@ namespace Drmaa
     
     public class DrmaaWrapper
     {
-        
-
         public static void Init(String contact)
         {
             StringBuilder error = new StringBuilder(1024);
@@ -216,7 +214,6 @@ namespace Drmaa
             }
             return jobId.ToString();
         }
-
 
         public static void Control(string jobId, Action action){
             StringBuilder error = new StringBuilder(1024);

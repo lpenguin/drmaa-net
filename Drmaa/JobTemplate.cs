@@ -5,14 +5,56 @@ using System;
 namespace Drmaa {
     public class JobTemplate{
         private DrmaaJobTemplate instance;
-        private class Attributes {
-            internal static readonly string RemoteCommand = "drmaa_remote_command";
-            internal static readonly string WorkingDirectory = "drmaa_wd";
-            internal static readonly string NativeSpecification = "drmaa_native_specification";
-            internal static readonly string JobName = "drmaa_job_name";
-            internal static readonly string JobSubmissionState = "drmaa_js_state";
-            internal static readonly string Argv = "drmaa_v_argv";
-        };
+
+        public string JobEnvironment {
+            get { 
+                return DrmaaWrapper.GetAttribute(instance, Attributes.JobEnvironment);
+            }
+
+            set { 
+                DrmaaWrapper.SetAttribute(instance, Attributes.JobEnvironment, value);
+            }
+        }
+
+        public string InputPath {
+            get { 
+                return DrmaaWrapper.GetAttribute(instance, Attributes.InputPath);
+            }
+
+            set { 
+                DrmaaWrapper.SetAttribute(instance, Attributes.InputPath, value);
+            }
+        }
+
+        public string OutputPath {
+            get { 
+                return DrmaaWrapper.GetAttribute(instance, Attributes.OutputPath);
+            }
+
+            set { 
+                DrmaaWrapper.SetAttribute(instance, Attributes.OutputPath, value);
+            }
+        }
+
+        public string ErrorPath {
+            get { 
+                return DrmaaWrapper.GetAttribute(instance, Attributes.ErrorPath);
+            }
+
+            set { 
+                DrmaaWrapper.SetAttribute(instance, Attributes.ErrorPath, value);
+            }
+        }
+
+        public bool JoinFiles {
+            get { 
+                return DrmaaWrapper.DrmaaToBool(DrmaaWrapper.GetAttribute(instance, Attributes.JoinFiles));
+            }
+
+            set { 
+                DrmaaWrapper.SetAttribute(instance, Attributes.JoinFiles, DrmaaWrapper.BoolToDrmaa(value));
+            }
+        }
 
         public string[] Arguments {
             get { 

@@ -112,6 +112,11 @@ namespace Drmaa
             IntPtr values,
             StringBuilder value, int value_len 
         );
+
+        [DllImport("libdrmaa")]
+        public static extern void drmaa_release_attr_values( 
+            IntPtr values 
+        );
     }
 
     public struct DrmaaJobTemplate
@@ -142,6 +147,20 @@ namespace Drmaa
         Failed = 0x40,
     }
     
+    internal class Attributes {
+        internal static readonly string RemoteCommand = "drmaa_remote_command";
+        internal static readonly string WorkingDirectory = "drmaa_wd";
+        internal static readonly string NativeSpecification = "drmaa_native_specification";
+        internal static readonly string JobName = "drmaa_job_name";
+        internal static readonly string JobSubmissionState = "drmaa_js_state";
+        internal static readonly string Argv = "drmaa_v_argv";
+        internal static readonly string InputPath = "drmaa_input_path";
+        internal static readonly string OutputPath = "drmaa_output_path";
+        internal static readonly string ErrorPath = "drmaa_error_path";
+        internal static readonly string JoinFiles = "drmaa_join_files";
+        internal static readonly string JobEnvironment = "drmaa_v_env";
+    };
+
     public class DrmaaWrapper
     {
         public static void Init(String contact)
@@ -281,6 +300,7 @@ namespace Drmaa
                 );
                 result.Add(value.ToString());
             }
+            DrmaaWrapperIntenal.drmaa_release_attr_values(valuesIter);
             return result.ToArray();
         }
 
@@ -298,5 +318,14 @@ namespace Drmaa
                 throw new DrmaaException(res, error.ToString());
             }
         }
+
+        public static bool DrmaaToBool(string drmaaBool){
+            return drmaaBool == "y";
+        }
+
+        public static string BoolToDrmaa(bool nativeBool){
+            return nativeBool ? "y" : "n";
+        }
+
     }
 }

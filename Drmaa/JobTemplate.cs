@@ -116,8 +116,8 @@ namespace Drmaa {
             }
         }
 
-        public JobTemplate(){
-            this.instance = DrmaaWrapper.AllocateJobTemplate();
+        internal JobTemplate(DrmaaJobTemplate instance){
+            this.instance = instance;
         }
 
         public string Submit(){

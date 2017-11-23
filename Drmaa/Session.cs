@@ -11,5 +11,9 @@ namespace Drmaa{
         public static void JobControl(string jobId, Action action){
             DrmaaWrapper.Control(jobId, action);
         }
+
+        public static JobTemplate AllocateJobTemplate(){
+            return new JobTemplate(DrmaaWrapper.AllocateJobTemplate());
+        }
     }
 }

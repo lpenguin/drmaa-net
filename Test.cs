@@ -12,19 +12,20 @@ namespace myApp
         static void Main(string[] args)
         {
             Session.Init();
-            var jt = new JobTemplate();
-            jt.JobName = "awesome_job";
-            jt.RemoteCommand = args[0];
-            jt.Arguments = args.Skip(1).ToArray();
-            Console.WriteLine(args[0]);
-            Console.WriteLine(string.Join(", ", args.Skip(1).ToArray()));
-            var jobId = jt.Submit();
-
-            while(true){
-                var status = Session.JobStatus(jobId);
-                Console.WriteLine(status);
-                Thread.Sleep(1000);
-            }
+            var templates = Enumerable.Range(0, 10).Select(n => {
+                var jt = Session.AllocateJobTemplate();
+                jt.JobName = $"test_job_{n}";
+                jt.RemoteCommand = "sleep";
+                jt.Arguments = new string[]{"10", };
+                jt.WorkingDirectory = "/home/nprian/tmp";
+                jt.OutputPath = $":/home/nprian/tmp/{n}.txt";
+                jt.ErrorPath = $":/home/nprian/tmp/{n}.txt";
+                jt.NativeSpecification = " -pe make 22";
+                return jt;
+            });
+            
+            var executor = new DrmaaExecutor(3);
+            executor.Execute(templates);
         }
     }
 }

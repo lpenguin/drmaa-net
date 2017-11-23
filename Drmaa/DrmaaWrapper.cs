@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Drmaa
 {
-    class DrmaaException : Exception
+    public class DrmaaException : Exception
     {
         public readonly int code;
         public readonly string message;
@@ -14,6 +14,10 @@ namespace Drmaa
         {
             this.code = code;
             this.message = message;
+        }
+
+        public override string ToString(){
+            return $"code: {code}, message: \"{message}\"";
         }
     }
 
